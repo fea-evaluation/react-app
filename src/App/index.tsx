@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Box, Button, Collapsible, Grommet, Heading, Layer, ResponsiveContext, ThemeType } from "grommet";
+import { Box, Button, Collapsible, grommet, Grommet, Heading, Layer, ResponsiveContext, ThemeType } from "grommet";
+import { deepMerge } from "grommet/utils";
 import { FormClose, Notification } from "grommet-icons";
 
-const theme: ThemeType = {
+import ShoppingList from "../ShoppingList";
+
+const theme: ThemeType = deepMerge(grommet, {
   global: {
     colors: {
       brand: "#228BE6",
@@ -13,7 +16,7 @@ const theme: ThemeType = {
       height: "20px",
     },
   },
-};
+});
 
 export function App() {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -40,7 +43,7 @@ export function App() {
             </Box>
             <Box direction="row" flex overflow={{ horizontal: "hidden" }}>
               <Box flex align="center" justify="center">
-                Content
+                <ShoppingList />
               </Box>
               {!showSidebar || size !== "small" ? (
                 <Collapsible direction="horizontal" open={showSidebar}>
