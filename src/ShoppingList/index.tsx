@@ -1,11 +1,13 @@
 import React from "react";
-import { List } from "grommet";
+import { Box, BoxProps, List } from "grommet";
 
-import { ShoppingItemStatus } from "../common";
+import { ShoppingItem, ShoppingItemStatus, ShoppingItemUnit } from "../common";
 
-import ShoppingListItem, { ShoppingItem, ShoppingItemUnit } from "./ShoppingListItem";
+import ShoppingListItem from "./ShoppingListItem";
 
-export function ShoppingList() {
+type Props = BoxProps & JSX.IntrinsicElements["div"];
+
+export function ShoppingList(props: Props) {
   const items: ShoppingItem[] = [
     {
       name: "Toothpaste",
@@ -33,7 +35,11 @@ export function ShoppingList() {
     },
   ];
 
-  return <List data={items}>{(datum: ShoppingItem) => <ShoppingListItem {...datum} />}</List>;
+  return (
+    <Box {...props}>
+      <List data={items}>{(datum: ShoppingItem) => <ShoppingListItem {...datum} />}</List>
+    </Box>
+  );
 }
 
 export default ShoppingList;

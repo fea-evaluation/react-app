@@ -2,22 +2,7 @@ import React from "react";
 import { Box, BoxProps, CheckBox, Text } from "grommet";
 import styled from "styled-components";
 
-import { ShoppingItemStatus } from "../../common";
-
-export enum ShoppingItemUnit {
-  g = "g",
-  kg = "kg",
-  l = "l",
-  ml = "ml",
-  pcs = "pcs",
-}
-
-export interface ShoppingItem {
-  name: string;
-  amount: number;
-  unit: ShoppingItemUnit;
-  status: ShoppingItemStatus;
-}
+import { ShoppingItem, ShoppingItemStatus, ShoppingItemUnitUtil } from "../../common";
 
 type Props = ShoppingItem & BoxProps & JSX.IntrinsicElements["div"];
 
@@ -48,7 +33,7 @@ function Label({ amount, name, status, unit }: ShoppingItem) {
   return (
     <DisabeldText disabled={isBought}>
       {amount}
-      {unit === ShoppingItemUnit.pcs ? "" : unit} {name}
+      {ShoppingItemUnitUtil.toLabel(unit)} {name}
     </DisabeldText>
   );
 }
