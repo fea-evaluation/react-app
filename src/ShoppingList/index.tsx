@@ -1,7 +1,9 @@
 import React from "react";
 import { List } from "grommet";
 
-import ShoppingListItem, { ShoppingItem, ShoppingItemStatus, ShoppingItemUnit } from "./ShoppingListItem";
+import { ShoppingItemStatus } from "../common";
+
+import ShoppingListItem, { ShoppingItem, ShoppingItemUnit } from "./ShoppingListItem";
 
 export function ShoppingList() {
   const items: ShoppingItem[] = [

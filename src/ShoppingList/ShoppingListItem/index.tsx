@@ -2,17 +2,14 @@ import React from "react";
 import { Box, BoxProps, CheckBox, Text } from "grommet";
 import styled from "styled-components";
 
+import { ShoppingItemStatus } from "../../common";
+
 export enum ShoppingItemUnit {
   g = "g",
   kg = "kg",
   l = "l",
   ml = "ml",
   pcs = "pcs",
-}
-
-export enum ShoppingItemStatus {
-  Created,
-  Bought,
 }
 
 export interface ShoppingItem {

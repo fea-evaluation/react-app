@@ -15,8 +15,8 @@ import {
 import { deepMerge } from "grommet/utils";
 import { FormClose, Notification } from "grommet-icons";
 
-import Overview from "../Overview";
 import ShoppingList from "../ShoppingList";
+import Status from "../Status";
 
 const theme: ThemeType = deepMerge(grommet, {
   global: {
@@ -52,7 +52,7 @@ export function App() {
               {!showSidebar || size !== "small" ? (
                 <Collapsible direction="horizontal" open={showSidebar}>
                   <Box flex width="medium" background="light-2" elevation="small" align="center" justify="center">
-                    <Overview />
+                    <Status />
                   </Box>
                 </Collapsible>
               ) : (
@@ -61,7 +61,7 @@ export function App() {
                     <Button icon={<FormClose />} onClick={() => setShowSidebar(false)} />
                   </Box>
                   <Box fill background="light-2" align="center" justify="center">
-                    <Overview />
+                    <Status />
                   </Box>
                 </Layer>
               )}
