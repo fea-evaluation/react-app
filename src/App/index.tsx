@@ -3,6 +3,7 @@ import { Box, Button, Collapsible, grommet, Grommet, Heading, Layer, ResponsiveC
 import { deepMerge } from "grommet/utils";
 import { FormClose, Notification } from "grommet-icons";
 
+import Overview from "../Overview";
 import ShoppingList from "../ShoppingList";
 
 const theme: ThemeType = deepMerge(grommet, {
@@ -37,7 +38,7 @@ export function App() {
               style={{ zIndex: 1 }}
             >
               <Heading level="3" margin="none">
-                My App
+                Shopping List
               </Heading>
               <Button icon={<Notification />} onClick={() => setShowSidebar((showSidebar) => !showSidebar)} />
             </Box>
@@ -48,7 +49,7 @@ export function App() {
               {!showSidebar || size !== "small" ? (
                 <Collapsible direction="horizontal" open={showSidebar}>
                   <Box flex width="medium" background="light-2" elevation="small" align="center" justify="center">
-                    Side Bar
+                    <Overview />
                   </Box>
                 </Collapsible>
               ) : (
@@ -57,7 +58,7 @@ export function App() {
                     <Button icon={<FormClose />} onClick={() => setShowSidebar(false)} />
                   </Box>
                   <Box fill background="light-2" align="center" justify="center">
-                    Side Bar
+                    <Overview />
                   </Box>
                 </Layer>
               )}
