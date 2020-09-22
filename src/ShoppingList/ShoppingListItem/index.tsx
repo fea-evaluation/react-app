@@ -28,7 +28,7 @@ export function ShoppingListItem({ amount, name, status, unit, ...props }: Props
   return (
     <Box direction="row-responsive" gap="large" align="center" {...props}>
       <Status status={status} />
-      <Name amount={amount} name={name} status={status} unit={unit} />
+      <Label amount={amount} name={name} status={status} unit={unit} />
     </Box>
   );
 }
@@ -46,11 +46,12 @@ const DisabeldText = styled(Text)<DisabledTextProps>`
   text-decoration: ${(props) => (props.disabled ? "line-through" : undefined)};
 `;
 
-function Name({ amount, name, status, unit }: ShoppingItem) {
+function Label({ amount, name, status, unit }: ShoppingItem) {
   const isBought = status === ShoppingItemStatus.Bought;
   return (
     <DisabeldText disabled={isBought}>
-      {name} {amount} {unit === ShoppingItemUnit.pcs ? "" : unit}
+      {amount}
+      {unit === ShoppingItemUnit.pcs ? "" : unit} {name}
     </DisabeldText>
   );
 }
