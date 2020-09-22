@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { Box, Button, Collapsible, grommet, Grommet, Heading, Layer, ResponsiveContext, ThemeType } from "grommet";
+import {
+  Box,
+  Button,
+  Collapsible,
+  grommet,
+  Grommet,
+  Header,
+  Heading,
+  Layer,
+  Main,
+  ResponsiveContext,
+  ThemeType,
+} from "grommet";
 import { deepMerge } from "grommet/utils";
 import { FormClose, Notification } from "grommet-icons";
 
@@ -20,32 +32,23 @@ const theme: ThemeType = deepMerge(grommet, {
 });
 
 export function App() {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
 
   return (
     <Grommet full theme={theme}>
       <ResponsiveContext.Consumer>
         {(size) => (
           <Box fill>
-            <Box
-              tag="header"
-              direction="row"
-              align="center"
-              justify="between"
-              background="brand"
-              pad={{ left: "medium", right: "small", vertical: "small" }}
-              elevation="medium"
-              style={{ zIndex: 1 }}
-            >
+            <Header background="brand" pad={{ left: "medium", right: "small", vertical: "small" }}>
               <Heading level="3" margin="none">
                 Shopping List
               </Heading>
               <Button icon={<Notification />} onClick={() => setShowSidebar((showSidebar) => !showSidebar)} />
-            </Box>
+            </Header>
             <Box direction="row" flex overflow={{ horizontal: "hidden" }}>
-              <Box flex align="center" justify="center">
+              <Main align="center" justify="center">
                 <ShoppingList />
-              </Box>
+              </Main>
               {!showSidebar || size !== "small" ? (
                 <Collapsible direction="horizontal" open={showSidebar}>
                   <Box flex width="medium" background="light-2" elevation="small" align="center" justify="center">
