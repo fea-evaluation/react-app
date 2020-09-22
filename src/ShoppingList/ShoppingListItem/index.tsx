@@ -23,7 +23,7 @@ type Props = ShoppingItem & BoxProps & JSX.IntrinsicElements["div"];
 
 export function ShoppingListItem({ amount, name, status, unit, ...props }: Props) {
   return (
-    <Box direction="row-responsive" gap="large" align="center" {...props}>
+    <Box direction="row" gap="large" align="center" {...props}>
       <Status status={status} />
       <Label amount={amount} name={name} status={status} unit={unit} />
     </Box>
