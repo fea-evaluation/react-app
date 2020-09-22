@@ -8,13 +8,14 @@ import {
   Header,
   Heading,
   Layer,
-  Main,
   ResponsiveContext,
   ThemeType,
 } from "grommet";
 import { deepMerge } from "grommet/utils";
-import { FormClose, Notification } from "grommet-icons";
+import { Analytics, FormClose } from "grommet-icons";
+import styled from "styled-components";
 
+import CreateShoppingItem from "../CreateShoppingItem";
 import ShoppingList from "../ShoppingList";
 import Status from "../Status";
 
@@ -31,8 +32,18 @@ const theme: ThemeType = deepMerge(grommet, {
   },
 });
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: center;
+  justify-items: stretch;
+  grid-gap: 48px;
+  padding: 48px;
+  width: 100%;
+`;
+
 export function App() {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   return (
     <Grommet full theme={theme}>
@@ -43,12 +54,17 @@ export function App() {
               <Heading level="3" margin="none">
                 Shopping List
               </Heading>
-              <Button icon={<Notification />} onClick={() => setShowSidebar((showSidebar) => !showSidebar)} />
+              <Button
+                focusIndicator={false}
+                icon={<Analytics />}
+                onClick={() => setShowSidebar((showSidebar) => !showSidebar)}
+              />
             </Header>
             <Box direction="row" flex overflow={{ horizontal: "hidden" }}>
-              <Main align="center" justify="center">
+              <Grid>
+                <CreateShoppingItem />
                 <ShoppingList />
-              </Main>
+              </Grid>
               {!showSidebar || size !== "small" ? (
                 <Collapsible direction="horizontal" open={showSidebar}>
                   <Box flex width="medium" background="light-2" elevation="small" align="center" justify="center">
