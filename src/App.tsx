@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import { Analytics } from "./Analytics";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "stretch",
+        alignContent: "stretch",
+        justifyItems: "stretch",
+        justifyContent: "stretch",
+      }}
+    >
+      <div
+        style={{
+          border: "1px solid",
+          flexGrow: 1,
+          flexShrink: 1,
+          display: "flex",
+          flexDirection: "row",
+          alignContent: "center",
+          alignItems: "center",
+          justifyItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div>Main</div>
+      </div>
+      <div style={{ flexGrow: 0, flexShrink: 0, display: "flex", justifyContent: "stretch" }}>
+        <Analytics />
+      </div>
     </div>
   );
 }
