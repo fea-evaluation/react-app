@@ -1,6 +1,8 @@
 import React from "react";
 
 import { Analytics } from "./Analytics";
+import { CreateShoppingItem } from "./CreateShoppingItem";
+import { ShoppingList } from "./ShoppingList";
 
 function App() {
   return (
@@ -28,7 +30,20 @@ function App() {
           justifyContent: "center",
         }}
       >
-        <div>Main</div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            alignItems: "center",
+            justifyItems: "stretch",
+            gridGap: "2em",
+            padding: "2em",
+            width: "100%",
+          }}
+        >
+          <CreateShoppingItem />
+          <ShoppingList />
+        </div>
       </div>
       <div style={{ flexGrow: 0, flexShrink: 0, display: "flex", justifyContent: "stretch" }}>
         <Analytics />
