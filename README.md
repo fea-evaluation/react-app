@@ -1,8 +1,9 @@
 # react-app > xstate
 
 1. [react-app > xstate](#react-app--xstate)
-   1. [Observations](#observations)
-   2. [Create React App](#create-react-app)
+   1. [Used resources](#used-resources)
+   2. [Observations](#observations)
+   3. [Create React App](#create-react-app)
       1. [Available Scripts](#available-scripts)
          1. [`yarn start`](#yarn-start)
          2. [`yarn test`](#yarn-test)
@@ -12,7 +13,16 @@
 
 This project is meant to help evaluating the use of a [xstate](https://xstate.js.org/) in a react application.
 
+## Used resources
+
+- <https://xstate.js.org/docs/guides/typescript.html#typestates>
+- <https://dev.to/robertbroersma/building-a-generic-state-machine-for-form-handling-using-xstate-38j3>
+- <https://css-tricks.com/using-react-and-xstate-to-build-a-sign-in-form/>
+
 ## Observations
+
+- **A ton of boilerplate code!!!!**
+- The intial context isn't correctly filled!?!?!
 
 ## Create React App
 
