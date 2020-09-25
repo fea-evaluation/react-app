@@ -2,8 +2,8 @@ import React from "react";
 
 export function Analytics() {
   const amounts = {
-    bought: 2,
     created: 3,
+    bought: 2,
   };
 
   return (
@@ -22,22 +22,26 @@ export function Analytics() {
     >
       <h2>Analytics</h2>
       <table>
-        <tr>
-          <th>Category</th>
-          <th>Amount</th>
-        </tr>
-        <tr>
-          <td style={{ textAlign: "right" }}>Created</td>
-          <td style={{ textAlign: "right" }}>{amounts.created}</td>
-        </tr>
-        <tr>
-          <td style={{ textAlign: "right" }}>Bought</td>
-          <td style={{ textAlign: "right" }}>{amounts.bought}</td>
-        </tr>
-        <tr>
-          <th style={{ textAlign: "right" }}>Total</th>
-          <th style={{ textAlign: "right" }}>{Object.values(amounts).reduce((sum, value) => sum + value, 0)}</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(amounts).map(([status, amount], i) => (
+            <tr key={status}>
+              <td style={{ textAlign: "right" }}>{`${status.substring(0, 1).toUpperCase()}${status.substring(1)}`}</td>
+              <td style={{ textAlign: "right" }}>{amount}</td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th style={{ textAlign: "right" }}>Total</th>
+            <th style={{ textAlign: "right" }}>{Object.values(amounts).reduce((sum, value) => sum + value, 0)}</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
