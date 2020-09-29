@@ -1,25 +1,21 @@
-import { assign, createMachine } from "xstate";
-
-import { ShoppingItem, ShoppingItemUnit } from "../../../common";
+import { assign, createMachine, StateValue } from "xstate";
 
 /*
  * CONTEXT
  */
 
-export interface Context {
-  values: Partial<ShoppingItem>;
-  errors?: string[];
+interface FormValues {
+  name: string;
+  amount: string;
+  unit: string;
 }
 
-export const createInitialContext = () =>
-  ({
-    values: {
-      name: "",
-      amount: 0,
-      unit: ShoppingItemUnit.pcs,
-    },
-    errors: undefined,
-  } as Context);
+export interface Context {
+  values: Partial<FormValues>;
+  errors?: {
+    [key: string]: string;
+  };
+}
 
 /*
  * EVENT
@@ -40,7 +36,9 @@ export interface ChangeEventPayload {
 }
 
 export interface ErrorEventPayload {
-  errors: string[];
+  errors: {
+    [key: string]: string;
+  };
 }
 
 export type SubmitEventPayload = undefined;
@@ -91,7 +89,7 @@ export enum StateEnum {
 interface EditingState {
   value: StateEnum.editing;
   context: Context & {
-    values: ShoppingItem;
+    values: FormValues;
     error: undefined;
   };
 }
@@ -99,7 +97,7 @@ interface EditingState {
 interface SubmittingState {
   value: StateEnum.submitting;
   context: Context & {
-    values: ShoppingItem;
+    values: FormValues;
     error: undefined;
   };
 }
@@ -107,19 +105,50 @@ interface SubmittingState {
 interface SuccessState {
   value: StateEnum.success;
   context: Context & {
-    values: ShoppingItem;
+    values: FormValues;
     error: undefined;
   };
 }
 
 export type State = EditingState | SubmittingState | SuccessState;
 
-enum EditingStateEnum {
+export enum EditingStateEnum {
   error = "error",
   pristine = "pristine",
 }
 
-export const createInitialState = () => StateEnum.editing;
+export function stateEnumToString(stateEnum: StateEnum | EditingStateEnum) {
+  switch (stateEnum) {
+    case EditingStateEnum.error:
+    case EditingStateEnum.pristine:
+      return `${StateEnum.editing}.${stateEnum}`;
+    default:
+      return stateEnum;
+  }
+}
+
+export function xStateStateValueToString(value: StateValue): string {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  const key = Object.keys(value)[0];
+  return `${key}.${xStateStateValueToString(value[key])}`;
+}
+
+export const matchesStateEnum = (...stateValues: (StateEnum | EditingStateEnum)[]) => {
+  const matchedValues = stateValues.map((stateValue) => {
+    switch (stateValue) {
+      case EditingStateEnum.error:
+      case EditingStateEnum.pristine:
+        return `${StateEnum.editing}.${stateValue}`;
+      default:
+        return stateValue;
+    }
+  });
+
+  return (stateValue: StateValue) => matchedValues.includes(xStateStateValueToString(stateValue));
+};
 
 /*
  * MACHINE

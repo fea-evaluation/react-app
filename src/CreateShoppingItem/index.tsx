@@ -1,19 +1,47 @@
 import React, { useCallback } from "react";
 import { useMachine } from "@xstate/react";
 
-import { ShoppingItemUnit } from "../common";
+import { ShoppingItemUnit, ShoppingItemUnitUtil } from "../common";
 
-import { CreateShoppingItemMachine, EventEnum } from "./machine/modules";
+import {
+  Context,
+  CreateShoppingItemMachine,
+  EditingStateEnum,
+  EventEnum,
+  matchesStateEnum,
+  xStateStateValueToString,
+} from "./machine/one-file";
 
-const onSubmit = async (...args: any[]) => {
-  console.log("onSubmit", ...args);
+const checkIsSubmittable = matchesStateEnum(EditingStateEnum.pristine);
+
+const unitLabels = Object.values(ShoppingItemUnit).map(ShoppingItemUnitUtil.toLabel);
+
+const onSubmit = async ({ values }: Context) => {
+  console.log("onSubmit", values);
+
+  const errors = {} as { [key: string]: string };
+
+  if (typeof values.name !== "string" || values.name.trim() === "") {
+    errors.name = "You have to put in a Name!";
+  }
+
+  if ((values?.amount || "").match(/^\d+(:?\.\d+)?$/gm)) {
+    errors.amount = "Amount has to be a number!";
+  }
+
+  if (!unitLabels.includes(values?.unit || "")) {
+    errors.unit = `Unit has to be one of ${unitLabels.map((label) => `"${label}"`).join(",")}`;
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return Promise.reject(errors);
+  }
 
   return true;
 };
 
 export function CreateShoppingItem() {
   const [state, send] = useMachine(CreateShoppingItemMachine, {
-    context: { values: { name: "Name", amount: 0, unit: ShoppingItemUnit.kg } },
     services: { onSubmit },
   });
 
@@ -33,13 +61,11 @@ export function CreateShoppingItem() {
     [send]
   );
 
-  console.log("state", state);
-  console.log("context", JSON.stringify(state.context));
-
   const { values, errors } = state.context;
 
-  console.log("values", values);
-  console.log("errors", errors);
+  const stateType = xStateStateValueToString(state.value);
+
+  console.info("STATE", stateType, "VALUES", values, "ERRORS", errors);
 
   return (
     <div>
@@ -50,6 +76,7 @@ export function CreateShoppingItem() {
           Name
           <input type="text" name="name" value={values.name} onChange={handleChange} />
         </label>
+        {errors?.name && <Error>{errors.name}</Error>}
 
         <label
           style={{ display: "grid", gridGap: ".5em", gridTemplateColumns: "minmax(50px, 1fr) minmax(100px, 3fr)" }}
@@ -57,6 +84,7 @@ export function CreateShoppingItem() {
           Amount
           <input type="text" name="amount" value={values.amount} onChange={handleChange} />
         </label>
+        {errors?.amount && <Error>{errors.amount}</Error>}
 
         <label
           style={{ display: "grid", gridGap: ".5em", gridTemplateColumns: "minmax(50px, 1fr) minmax(100px, 3fr)" }}
@@ -64,12 +92,19 @@ export function CreateShoppingItem() {
           Unit
           <input type="text" name="unit" value={values.unit} onChange={handleChange} />
         </label>
+        {errors?.unit && <Error>{errors.unit}</Error>}
 
         <div style={{ display: "grid", gridGap: ".5em", gridTemplateColumns: "minmax(50px, 1fr) minmax(100px, 3fr)" }}>
           <span />
-          <button type="submit">Add</button>
+          <button disabled={!checkIsSubmittable(state.value)} type="submit">
+            Add
+          </button>
         </div>
       </form>
     </div>
   );
+}
+
+function Error(props: JSX.IntrinsicElements["div"]) {
+  return <div {...props} style={{ color: "red" }} />;
 }
