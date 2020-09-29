@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { useMachine } from "@xstate/react";
 
-import { CreateShoppingItemMachine } from "./machine";
-import { EventEnum } from "./machine/events";
 import { ShoppingItemUnit } from "../common";
+
+import { CreateShoppingItemMachine, EventEnum } from "./machine/modules";
 
 const onSubmit = async (...args: any[]) => {
   console.log("onSubmit", ...args);

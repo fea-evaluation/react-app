@@ -1,4 +1,4 @@
-import { ShoppingItem } from "../../../common";
+import { ShoppingItem } from "../../../../common";
 
 import { ActionEnum } from "../actions";
 import { Context } from "../context";
